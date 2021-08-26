@@ -7,6 +7,7 @@
 <fmt:setBundle basename="property/messages"/>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -22,32 +23,25 @@
 </head>
 <body class="p-0 m-0">
 <%--      th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">--%>
-<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
-    <div class="container-fluid">
-        <div>
-            <a href="?lang=en" class="btn btn-outline-success">English</a>
-            <a href="?lang=uk" class="btn btn-outline-success">Українська</a>
-        </div>
-        <div sec:authorize="hasAuthority('SPEAKER')">
-            <a class="btn btn-outline-success" href="${contextPath}/index/cabinet-entrance">
-                <fmt:message key="speaker.cabinet.entrance">Cabinet</fmt:message></a>
-        </div>
-        <div sec:authorize="hasAuthority('MODERATOR')">
-            <a class="btn btn-outline-success" href="${contextPath}/event/all">
-               <fmt:message key="event.list">Events list</fmt:message></a>
-        </div>
 
-        <form action="${contextPath}/logout" name="logout" method="POST">
-            <button type="submit" class="btn btn-outline-success" name="logout" value="logout">
-                    <fmt:message key="login.out">Log out</fmt:message>
-            </button>
-        </form>
-    </div>
-</nav>
+<%--<div th:fragment="menu">--%>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <div class="container-fluid">
+            <div>
+                <a href="?lang=en" class="btn btn-outline-success">English</a>
+                <a href="?lang=uk" class="btn btn-outline-success">Українська</a>
+            </div>
+            <form action="${contextPath}/logout" name="logout" method="POST">
+                <a class="btn btn-outline-success" href="${contextPath}/index"> <fmt:message key="back.button">Back</fmt:message></a>
+                <button type="submit" class="btn btn-outline-success" name="logout" value="logout">
+                        <fmt:message key="login.out">Log out</fmt:message>
+                </button>
+            </form>
+        </div>
+    </nav>
+<%--</div>--%>
 
-<div class="card text-center container  mt-5 w-50 shadow-lg">
-    <div class="display-2 text-center w-100"> <fmt:message key="event.list">Event list</fmt:message></div>
-</div>
+
 
 <div class="container w-75 bg-light">
     <div class="row my-5">
@@ -55,22 +49,16 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">  <fmt:message key="event.crete.title">Title</fmt:message></th>
-                    <th scope="col">  <fmt:message key="event.scheduled.date">ScheduledDate</fmt:message></th>
-                    <th scope="col">  <fmt:message key="register.to.event">Register to event</fmt:message></th>
-
+                    <th scope="col"> <fmt:message key="event.crete.title">Title</fmt:message></th>
+                    <th scope="col"> <fmt:message key="event.scheduled.date">ScheduledDate</fmt:message></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <c:forEach var="event" items="${requestScope.events}">
-                        <td><span> ${event.title}</span></td>
-                        <td><span> ${event.scheduledDate}</span></td>
-                        <td>
-                            <a class="btn btn-outline-secondary" href="${contextPath}/index/event/{id}/event-reg(id=${event.getId})">
-                               <fmt:message key="speaker.register">Register</fmt:message></a>
-                        </td>
-                    </c:forEach>
+                <c:forEach var="event" items="${requestScope.events}">
+                    <td><span>${event.title}</span></td>
+                    <td><span>${event.scheduledDate}</span></td>
+                </c:forEach>
                 </tr>
                 </tbody>
             </table>

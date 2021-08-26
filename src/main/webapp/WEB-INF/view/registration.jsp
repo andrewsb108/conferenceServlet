@@ -7,6 +7,7 @@
 <fmt:setBundle basename="property/messages"/>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -35,7 +36,7 @@
             <form action="${contextPath}/logout" name="logout" method="POST">
                 <a class="btn btn-outline-success" href="${contextPath}/login"> <fmt:message key="back.button"> Back </fmt:message></a>
                 <button type="submit" class="btn btn-outline-success" name="logout" value="logout">
-                <fml:message key="login.out">Log out</fml:message></button>
+                <fmt:message key="login.out">Log out</fmt:message></button>
             </form>
                    </div>
     </nav>
@@ -119,7 +120,7 @@
             <div>
                 <br>
                 <button class="btn btn-outline-success" type="submit">
-                <fmt:message key="login.sign.up"> Sign up </fmt:message> </button>
+                <fmt:message key="login.sign.up">Sign up</fmt:message></button>
 <%--                <div class="my-sm-3 m-3 text-right">--%>
 <%--                    <a href="${contextPath}/login"> <fmt:message key="reg.sign.in">I already have an--%>
 <%--                                                       Account </fmt:message> </a></div>--%>

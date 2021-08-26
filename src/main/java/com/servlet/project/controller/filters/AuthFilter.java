@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
 
-@WebFilter("/moderator/*")
+@WebFilter("/event/*")
 public class AuthFilter implements Filter {
     private static final Logger log = LogManager.getLogger(AuthFilter.class);
     private SecurityService securityService;

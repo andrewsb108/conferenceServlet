@@ -25,9 +25,6 @@ public class SecurityService {
         if (user.getRole() == Role.MODERATOR) {
             return "/moderator";
         }
-        else if (user.getRole() == Role.SPEAKER) {
-            return "/speaker";
-        }
         return "/index";
     }
 

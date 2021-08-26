@@ -11,7 +11,8 @@ public class User {
     private boolean enabled;
     private Role role;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
