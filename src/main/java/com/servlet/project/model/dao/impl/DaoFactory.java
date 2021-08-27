@@ -1,6 +1,7 @@
 package com.servlet.project.model.dao.impl;
 
 import com.servlet.project.model.dao.EventDao;
+import com.servlet.project.model.dao.ParticipantDao;
 import com.servlet.project.model.dao.TopicDao;
 import com.servlet.project.model.dao.UserDao;
 
@@ -18,5 +19,9 @@ public class DaoFactory {
 
     public static TopicDao createTopicDao() {
         return new TopicDaoImpl(getConnection());
+    }
+
+    public static ParticipantDao createParticipantDao() {
+        return new ParticipantDaoImpl(getConnection());
     }
 }

@@ -15,13 +15,14 @@ public class CommandResolver {
 
     private static final SecurityService securityService = new SecurityService();
     private static final UserService userService = new UserService(DaoFactory.createUserDao(), securityService);
-    private static final EventService eventService = new EventService();
+    private static final EventService eventService = new EventService(DaoFactory.createEventDao(), DaoFactory.createUserDao(), DaoFactory.createParticipantDao());
 
     private static final Map<String, Command> commands = new HashMap<>() {{
         put("logout", new Logout());
         put("login", new Login(userService, securityService));
         put("registration", new Registration(userService));
         put("index", new Index(eventService));
+        put("register/event", new RegisterToEvent(eventService, securityService));
 
     }};
 

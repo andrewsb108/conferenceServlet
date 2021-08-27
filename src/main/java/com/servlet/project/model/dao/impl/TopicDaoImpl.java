@@ -29,8 +29,8 @@ public class TopicDaoImpl implements TopicDao {
     }
 
     @Override
-    public Optional<Topic> save(Topic topic) {
-        return Optional.empty();
+    public boolean save(Topic topic) {
+        return false;
     }
 
     @Override

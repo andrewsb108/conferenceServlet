@@ -39,7 +39,7 @@
 </nav>
 
 <div class="col py-3">
-    <form method="POST" class="register-form" action="${contextPath}/index/event/{eventId}/event-reg(eventId=${event.getId()})"
+    <form method="POST" class="register-form" action="${contextPath}/register/event?id=${requestScope.eventId}">
 <%--          th:object="${participant}">--%>
 <%--        <h5 class="text-danger" th:text="${error_message_event}"></h5>--%>
 <%--        <h5 class="text-danger" th:text="${error_message}"></h5>--%>
@@ -56,7 +56,7 @@
 <%--            <!--                 role="alert">Validation error</div>-->--%>
 <%--            <!--        </div>-->--%>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" th:field="${participant.isSpeaker}">
+                <input class="form-check-input" type="checkbox" name="speaker">
                 <label class="form-check-label"> <fmt:message key="speaker.become.speaker">Become a Speaker</fmt:message></label>
             </div>
             <div>

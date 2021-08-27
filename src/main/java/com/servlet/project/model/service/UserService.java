@@ -29,7 +29,7 @@ public class UserService {
         return userDao.findById(id);
     }
 
-    public Optional<User> create(String firstName,
+    public boolean create(String firstName,
                                  String lastName,
                                  String email,
                                  String password,
@@ -65,4 +65,5 @@ public class UserService {
     public boolean delete(long id) {
         return userDao.deleteById(id);
     }
+
 }

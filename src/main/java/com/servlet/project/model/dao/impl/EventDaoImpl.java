@@ -29,7 +29,7 @@ public class EventDaoImpl implements EventDao {
         try (PreparedStatement ps = connection.prepareStatement(DBQueries.FIND_EVENT_BY_ID_QUERY)) {
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
-           if (rs.next()) {
+            if (rs.next()) {
                 return Optional.ofNullable(eventMapper.extract(rs));
             }
         } catch (SQLException e) {
@@ -40,7 +40,9 @@ public class EventDaoImpl implements EventDao {
 
     @Override
     public List<Event> findAll() {
-        try(PreparedStatement ps = connection.prepareStatement(DBQueries.FIND_ALL_EVENTS_QUERY)) {
+        try (PreparedStatement ps = connection.prepareStatement(DBQueries.FIND_ALL_EVENTS_QUERY,
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY)) {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return eventMapper.extractAll(rs);
@@ -52,22 +54,20 @@ public class EventDaoImpl implements EventDao {
     }
 
     @Override
-    public Optional<Event> save(Event event) {
+    public boolean save(Event event) {
         try (PreparedStatement statement =
                      connection.prepareStatement(DBQueries.SAVE_EVENT_QUERY)) {
             statement.setString(1, event.getTitle());
-            statement.setLong(2, event.getTopicId());
-            statement.setLong(3, event.getParticipantId());
-            statement.setObject(4, LocalDateTime.class);
+            statement.setObject(2, LocalDateTime.class);
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException ex1) {
             log.warn("Attempt to create existing event [title: {}]", event.getTitle());
             throw new UserAlreadyExistException("Such event already exists: " + event.getTitle());
         } catch (SQLException e) {
             log.error("ERROR: can't provide event save operation!", e);
-            return Optional.empty();
+            return false;
         }
-            return Optional.of(event);
+        return true;
     }
 
     @Override

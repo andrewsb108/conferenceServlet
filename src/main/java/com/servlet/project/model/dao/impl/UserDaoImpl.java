@@ -11,7 +11,6 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
@@ -86,7 +85,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> save(User user) {
+    public boolean save(User user) {
         try (PreparedStatement statement =
                      connection.prepareStatement(DBQueries.SAVE_USER_QUERY)) {
             statement.setString(1, user.getFirstName());
@@ -100,17 +99,13 @@ public class UserDaoImpl implements UserDao {
             throw new UserAlreadyExistException("Such user already exists: " + user.getEmail());
         } catch (SQLException e) {
             log.error("ERROR: can't provide user save operation!", e);
-            return Optional.empty();
+            return false;
         }
-        return Optional.of(user);
+        return true;
     }
 
     @Override
     public Optional<User> update(User user) {
-        if (Objects.isNull(user.getPassword()) || user.getPassword().isEmpty()) {
-            return Optional.ofNullable(updateNoPass(user));
-        }
-
         try (PreparedStatement statement =
                      connection.prepareStatement(DBQueries.UPDATE_USER_QUERY)) {
             statement.setString(1, user.getFirstName());
@@ -127,21 +122,21 @@ public class UserDaoImpl implements UserDao {
         return Optional.of(user);
     }
 
-    private User updateNoPass(User user) {
-        try (PreparedStatement statement =
-                     connection.prepareStatement(DBQueries.UPDATE_USER_SAME_PASSWORD_QUERY)) {
-            statement.setString(1, user.getFirstName());
-            statement.setString(2, user.getLastName());
-            statement.setBoolean(3, user.isEnabled());
-            statement.setString(4, user.getRole().name());
-            statement.setLong(5, user.getId());
-            statement.executeUpdate();
+    @Override
+    public Optional<User> updateUserRole(User user) {
+        try(PreparedStatement ps = connection.prepareStatement(DBQueries.UPDATE_USER_BY_ROLE_QUERY)) {
+            ps.setString(1, user.getRole().name());
+            ps.setLong(2, user.getId());
+            boolean isUpdated = ps.executeUpdate() > 0;
+            if (isUpdated) {
+                return Optional.of(user);
+            }
         } catch (SQLException e) {
-            log.error("ERROR: can't provide user update operation!", e);
-            return new User();
+            log.info("Can not provide user update by role operation", e);
         }
-        return user;
+        return Optional.empty();
     }
+
 
     @Override
     public Optional<User> delete(User user) {

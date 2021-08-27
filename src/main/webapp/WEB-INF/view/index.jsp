@@ -34,44 +34,53 @@
         </div>
         <div sec:authorize="hasAuthority('MODERATOR')">
             <a class="btn btn-outline-success" href="${contextPath}/event/all">
-               <fmt:message key="event.list">Events list</fmt:message></a>
+                <fmt:message key="event.list">Events list</fmt:message></a>
         </div>
 
         <form action="${contextPath}/logout" name="logout" method="POST">
             <button type="submit" class="btn btn-outline-success" name="logout" value="logout">
-                    <fmt:message key="login.out">Log out</fmt:message>
+                <fmt:message key="login.out">Log out</fmt:message>
             </button>
         </form>
     </div>
 </nav>
 
 <div class="card text-center container  mt-5 w-50 shadow-lg">
-    <div class="display-2 text-center w-100"> <fmt:message key="event.list">Event list</fmt:message></div>
+    <div class="display-2 text-center w-100"><fmt:message key="event.list">Event list</fmt:message></div>
 </div>
 
 <div class="container w-75 bg-light">
     <div class="row my-5">
         <div class="col py-3 shadow rounded">
+            <c:if test="${sessionScope.unique_participant_error == true}">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <h5 class="text-danger"><fmt:message key="participant.unique"/></h5>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <a href="<c:remove var='unique_participant_error' scope="session"/>"
+                           style="color: #6c757d; text-decoration: none"><span aria-hidden="true">&times;</span></a>
+                    </button>
+                </div>
+            </c:if>
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">  <fmt:message key="event.crete.title">Title</fmt:message></th>
-                    <th scope="col">  <fmt:message key="event.scheduled.date">ScheduledDate</fmt:message></th>
-                    <th scope="col">  <fmt:message key="register.to.event">Register to event</fmt:message></th>
-
+                    <th scope="col"><fmt:message key="event.crete.title">Title</fmt:message></th>
+                    <th scope="col"><fmt:message key="event.scheduled.date">ScheduledDate</fmt:message></th>
+                    <th scope="col"><fmt:message key="register.to.event">Register to event</fmt:message></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <c:forEach var="event" items="${requestScope.events}">
+                <c:forEach var="event" items="${requestScope.events}">
+                    <tr>
                         <td><span> ${event.title}</span></td>
                         <td><span> ${event.scheduledDate}</span></td>
                         <td>
-                            <a class="btn btn-outline-secondary" href="${contextPath}/index/event/{id}/event-reg(id=${event.getId})">
-                               <fmt:message key="speaker.register">Register</fmt:message></a>
+                            <a class="btn btn-outline-secondary"
+                               href="${contextPath}/register/event?id=${event.id}">
+                                <fmt:message key="speaker.register">Register</fmt:message></a>
                         </td>
-                    </c:forEach>
-                </tr>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>

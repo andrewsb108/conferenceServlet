@@ -1,6 +1,8 @@
 package com.servlet.project.model.dao.mapper;
 
+import com.servlet.project.model.dto.EventRegisterDto;
 import com.servlet.project.model.entity.Event;
+import com.servlet.project.model.entity.Participant;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,10 +17,8 @@ public class EventMapper implements ObjectMapper<Event> {
     public Event extract(ResultSet rs) throws SQLException {
         return Optional.ofNullable(Event.builder()
                 .id(rs.getLong("id"))
-                .title(rs.getString("first_name"))
-                .topicId(rs.getLong("last_name"))
-                .participantId(rs.getLong("participant"))
-                .scheduledDate(rs.getObject(5, LocalDateTime.class))
+                .title(rs.getString("title"))
+                .scheduledDate(rs.getObject(3, LocalDateTime.class))
                 .build()).orElseThrow(SQLException::new);
     }
 
@@ -32,5 +32,15 @@ public class EventMapper implements ObjectMapper<Event> {
             list.add(event);
         }
         return list;
+    }
+
+    public Participant convertEventRegisterDtoToParticipant(EventRegisterDto eventRegDto, Event event) {
+        if (eventRegDto == null) {
+            return null;
+        }
+        Participant participant = new Participant();
+        participant.setNickName(eventRegDto.getNickName());
+        participant.setSpeaker(eventRegDto.getSpeaker());
+        return participant;
     }
 }

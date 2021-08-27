@@ -55,7 +55,7 @@
             <div class="form-group">
                 <label for="password"><i class="zmdi zmdi-lock"></i></label>
                 <br> <input type="password" name="password" id="password"
-                            placeholder=<fmt:message key="login.password.placeholder">password</fmt:message>">
+                            placeholder="<fmt:message key="login.password.placeholder">password</fmt:message>">
             </div>
             <button class="btn btn-lg btn-info" type="submit" ><fmt:message key="login.login">Log In </fmt:message>
             </button>

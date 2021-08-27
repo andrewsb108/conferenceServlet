@@ -5,8 +5,9 @@ import java.util.Objects;
 public class Topic {
     private long id;
     private String title;
-    private long eventId;
     private long speakerId;
+    private long eventId;
+
 
     public Topic() {
     }
@@ -14,8 +15,8 @@ public class Topic {
     public Topic(long id, String title, long eventId, long speakerId) {
         this.id = id;
         this.title = title;
-        this.eventId = eventId;
         this.speakerId = speakerId;
+        this.eventId = eventId;
     }
 
     public long getId() {
@@ -34,14 +35,6 @@ public class Topic {
         this.title = title;
     }
 
-    public long getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(long eventId) {
-        this.eventId = eventId;
-    }
-
     public long getSpeakerId() {
         return speakerId;
     }
@@ -50,20 +43,28 @@ public class Topic {
         this.speakerId = speakerId;
     }
 
+    public long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(long eventId) {
+        this.eventId = eventId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Topic topic = (Topic) o;
         return id == topic.id &&
-                eventId == topic.eventId &&
                 speakerId == topic.speakerId &&
+                eventId == topic.eventId &&
                 Objects.equals(title, topic.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, eventId, speakerId);
+        return Objects.hash(id, title, speakerId, eventId);
     }
 
     @Override
@@ -71,16 +72,16 @@ public class Topic {
         return "Topic{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", eventId=" + eventId +
                 ", speakerId=" + speakerId +
+                ", eventId=" + eventId +
                 '}';
     }
 
     private Topic(TopicBuilder builder) {
         this.id = builder.id;
         this.title = builder.title;
-        this.eventId = builder.eventId;
         this.speakerId = builder.speakerId;
+        this.eventId = builder.eventId;
     }
 
     public static TopicBuilder builder() {
@@ -90,8 +91,8 @@ public class Topic {
     public static class TopicBuilder {
         private long id;
         private String title;
-        private long eventId;
         private long speakerId;
+        private long eventId;
 
         public TopicBuilder id(long id) {
             this.id = id;
@@ -103,13 +104,15 @@ public class Topic {
             return this;
         }
 
-        public TopicBuilder eventId(long eventId) {
-            this.eventId = eventId;
-            return this;
-        }
 
         public TopicBuilder speakerId(long speakerId) {
             this.speakerId = speakerId;
+            return this;
+        }
+
+
+        public TopicBuilder eventId(long eventId) {
+            this.eventId = eventId;
             return this;
         }
 

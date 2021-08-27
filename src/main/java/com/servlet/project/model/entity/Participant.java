@@ -4,20 +4,20 @@ import java.util.Objects;
 
 public class Participant {
     private long id;
-    private long eventId;
-    private long userId;
     private boolean isSpeaker;
     private String nickName;
+    private long userId;
+    private Long eventId;
 
     public Participant() {
     }
 
-    public Participant(long id, long eventId, long userId, boolean isSpeaker, String nickName) {
+    public Participant(long id, boolean isSpeaker, String nickName, long userId, Long eventId) {
         this.id = id;
-        this.eventId = eventId;
-        this.userId = userId;
         this.isSpeaker = isSpeaker;
         this.nickName = nickName;
+        this.userId = userId;
+        this.eventId = eventId;
     }
 
     public long getId() {
@@ -26,14 +26,6 @@ public class Participant {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(long eventId) {
-        this.eventId = eventId;
     }
 
     public long getUserId() {
@@ -60,39 +52,47 @@ public class Participant {
         this.nickName = nickName;
     }
 
+    public Long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Participant that = (Participant) o;
         return id == that.id &&
-                eventId == that.eventId &&
                 userId == that.userId &&
                 isSpeaker == that.isSpeaker &&
+                Objects.equals(eventId, that.eventId) &&
                 Objects.equals(nickName, that.nickName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, eventId, userId, isSpeaker, nickName);
+        return Objects.hash(id, userId, isSpeaker, eventId, nickName);
     }
 
     @Override
     public String toString() {
         return "Participant{" +
                 "id=" + id +
-                ", eventId=" + eventId +
                 ", userId=" + userId +
                 ", isSpeaker=" + isSpeaker +
+                ", eventId=" + eventId +
                 ", nickName='" + nickName + '\'' +
                 '}';
     }
 
     private Participant(ParticipantBuilder builder) {
         this.id = builder.id;
-        this.eventId = builder.eventId;
         this.userId = builder.userId;
         this.isSpeaker = builder.isSpeaker;
+        this.eventId = builder.eventId;
         this.nickName = builder.nickName;
     }
 
@@ -102,18 +102,13 @@ public class Participant {
 
     public static class ParticipantBuilder {
         private long id;
-        private long eventId;
         private long userId;
         private boolean isSpeaker;
+        private long eventId;
         private String nickName;
 
         public ParticipantBuilder id(long id) {
             this.id = id;
-            return this;
-        }
-
-        public ParticipantBuilder eventId(long eventId) {
-            this.eventId = eventId;
             return this;
         }
 
@@ -124,6 +119,11 @@ public class Participant {
 
         public ParticipantBuilder isSpeaker(boolean isSpeaker) {
             this.isSpeaker = isSpeaker;
+            return this;
+        }
+
+        public ParticipantBuilder eventId(long eventId) {
+            this.eventId = eventId;
             return this;
         }
 
