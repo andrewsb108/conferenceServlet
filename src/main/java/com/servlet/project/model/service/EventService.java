@@ -5,6 +5,7 @@ import com.servlet.project.exceptions.EventNotFoundException;
 import com.servlet.project.model.dao.EventDao;
 import com.servlet.project.model.dao.ParticipantDao;
 import com.servlet.project.model.dao.UserDao;
+import com.servlet.project.model.dao.impl.DaoFactory;
 import com.servlet.project.model.dao.mapper.EventMapper;
 import com.servlet.project.model.dto.EventDto;
 import com.servlet.project.model.entity.Event;
@@ -21,18 +22,11 @@ import java.util.Optional;
 
 public class EventService {
 
-    private final EventDao eventDao;
-    private final UserDao userDao;
-    private final ParticipantDao participantDao;
+    private final EventDao eventDao = DaoFactory.createEventDao();
+    private final UserDao userDao = DaoFactory.createUserDao();
+    private final ParticipantDao participantDao = DaoFactory.createParticipantDao();
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
-    public EventService(EventDao eventDao, UserDao userDao, ParticipantDao participantDao) {
-        this.eventDao = eventDao;
-        this.userDao = userDao;
-        this.participantDao = participantDao;
-
-    }
 
     public boolean createEvent(long id, String title, String scheduledDate) {
         return eventDao.save(Event.builder()

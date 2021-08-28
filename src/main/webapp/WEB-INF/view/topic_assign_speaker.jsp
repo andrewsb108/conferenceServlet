@@ -38,22 +38,25 @@
     </div>
 </nav>
 <div class="card text-center container  mt-5 w-50 shadow-lg">
-    <h2 class="card-header">Topic</h2>
+    <h2 class="card-header"> <fmt:message key="topic.select.user">Topic</fmt:message></h2>
 
     <div class="col">
         <table class="table">
-            <tbody th:object="${topic}">
+            <tbody>
             <tr>
-                <td th:text="${topic.title}"/>
+                <td><c:out value="${topic.title}"/></td>
+<%--            <td th:text="${topic.title}"/>--%>
+<%--            <td><span>${topic.title}</span></td>&ndash;%&gt;--%>
                 <td>
                     <form id="assignSpeaker" action="${contextPath}/event/edit/{eventId}/topic/{topicId}(eventId=${eventId},
                      topicId=${topic.getId()})" method="post">
                         <select name="speakerId" class="form-select">
-                            <option value="" selected disabled>Select user</option>
-                            <option th:each="user : ${users}"
-                                    th:value="${user.userId}"
-                                    th:text="${user.firstName}">
-                            </option>
+                            <option value="" selected disabled><fmt:message key="topic.select.user">Select user</fmt:message></option>
+                            <c:forEach var="user" items="${requestScope.users}">
+                                <option value="${user.id}">
+                                    <c:out value="${user.firstName}"/>
+                                </option>
+                            </c:forEach>
                         </select>
                     </form>
                 </td>
@@ -66,6 +69,12 @@
         </table>
     </div>
 </div>
-<div th:replace="fragments/login_page :: footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
 </body>
 </html>

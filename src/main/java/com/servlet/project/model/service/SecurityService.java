@@ -23,7 +23,7 @@ public class SecurityService {
     public String setUriByRole(HttpServletRequest request) {
         User user = getLoggedUser(request.getSession());
         if (user.getRole() == Role.MODERATOR) {
-            return "/moderator";
+            return "/event/all";
         }
         return "/index";
     }

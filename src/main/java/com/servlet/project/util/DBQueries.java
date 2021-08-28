@@ -15,6 +15,9 @@ public class DBQueries {
 
     public static final String SAVE_PARTICIPANTS_QUERY = "INSERT INTO participants (is_speaker, nick_name, user_id, event_id) VALUES (?, ?, ?, ?)";
 
+    public static final String FIND_BY_EVENT_ID_FROM_TOPIC_QUERY = "SELECT * FROM topics WHERE event_id = ?";
+
+
 
 }
 

@@ -30,9 +30,10 @@
             <a href="?lang=uk" class="btn btn-outline-success">Українська</a>
         </div>
         <form action="${contextPath}/logout" name="logout" method="POST">
-            <a class="btn btn-outline-success" href="${contextPath}/index">  <fmt:message key="back.button">Back</fmt:message></a>
+            <a class="btn btn-outline-success" href="${contextPath}/index"> <fmt:message
+                    key="back.button">Back</fmt:message></a>
             <button type="submit" class="btn btn-outline-success" name="logout" value="logout">
-            <fmt:message key="login.out">Log out</fmt:message>
+                <fmt:message key="login.out">Log out</fmt:message>
             </button>
         </form>
     </div>
@@ -40,29 +41,24 @@
 
 <div class="col py-3">
     <form method="POST" class="register-form" action="${contextPath}/register/event?id=${requestScope.eventId}">
-<%--          th:object="${participant}">--%>
-<%--        <h5 class="text-danger" th:text="${error_message_event}"></h5>--%>
-<%--        <h5 class="text-danger" th:text="${error_message}"></h5>--%>
-
         <div class="form-group">
             <label for="nickName"><i class="zmdi zmdi-account material-icons-name"></i></label>
             <br><input type="text"
-<%--                       th:field="*{nickName}"--%>
                        name="nickName"
                        id="nickName"
                        value="${requestScope.nickName}"
-                       placeholder="<fmt:message key="event.reg.participant">required autofocus </fmt:message>"
-<%--            <!--            <div th:if="${#fields.hasErrors('nickName')}" th:errors="*{nickName}" class="alert alert-danger p-2"-->--%>
-<%--            <!--                 role="alert">Validation error</div>-->--%>
-<%--            <!--        </div>-->--%>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="speaker">
-                <label class="form-check-label"> <fmt:message key="speaker.become.speaker">Become a Speaker</fmt:message></label>
-            </div>
-            <div>
-                <br>
-                <button class="btn btn-outline-success" type="submit"> <fmt:message key="register.to.event">Register</fmt:message></button>
-            </div>
+                       placeholder="<fmt:message key="event.reg.participant">required autofocus </fmt:message>">
+        </div>
+        <div>
+            <input type="checkbox" name="speaker">
+                <label class="form-check-label"> <fmt:message
+                        key="speaker.become.speaker">Become a Speaker</fmt:message></label>
+        </div>
+        <div>
+            <br>
+            <button class="btn btn-outline-success" type="submit"><fmt:message
+                    key="register.to.event">Register</fmt:message></button>
+        </div>
     </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"

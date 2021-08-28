@@ -5,6 +5,8 @@ import com.servlet.project.model.service.EventService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
+import static com.servlet.project.util.ViewResolver.resolveAdmin;
+
 public class ModeratorCreateEvent implements Command {
 
     private final EventService eventService;
@@ -17,6 +19,11 @@ public class ModeratorCreateEvent implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+
+        if (request.getMethod().equals("GET")) {
+            return resolveAdmin("event_create");
+        }
+
         String id = request.getParameter("id");
         String title = request.getParameter("title");
         String scheduledDate = request.getParameter("scheduledDate");
@@ -28,7 +35,7 @@ public class ModeratorCreateEvent implements Command {
         long eventId = Long.parseLong(id);
         eventService.createEvent(eventId, title, scheduledDate);
 
-        return REDIRECT_TO_MODERATOR;
+        return resolveAdmin(REDIRECT_TO_MODERATOR);
 
     }
 }
