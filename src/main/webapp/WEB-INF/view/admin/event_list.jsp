@@ -65,13 +65,22 @@
                         </td>
                         <td>
                             <a class="btn btn-outline-danger"
-                               href="<%--${contextPath}/event/delete/{id}(id=${event.getId})}--%>">
+                               href="${contextPath}/event/delete?id=${event.id}">
                                 <fmt:message key="event.delete.button">Delete</fmt:message></a>
                         </td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
+            <c:if test="${sessionScope.event_error_message != null}">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <fmt:message key="${sessionScope.event_error_message}"/>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <a href="<c:remove var='event_error_message' scope="session"/>"
+                           style="color: #6c757d; text-decoration: none"><span aria-hidden="true">&times;</span></a>
+                    </button>
+                </div>
+            </c:if>
         </div>
     </div>
 </div>

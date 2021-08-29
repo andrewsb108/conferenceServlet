@@ -44,10 +44,7 @@
     <h2 class="card-header"><fmt:message key="event.edit">Edit event</fmt:message></h2>
     <div class="col py-3">
         <form method="POST" class="register-form" id="register-form"
-              action="${contextPath}/event/update/{eventId}(eventId=${event.getId()})"
-        <%--              th:object="${event}">--%>
-        <%--            <h5 class="text-danger" th:text="${error_message}"></h5>--%>
-
+              action="${contextPath}/event/edit?id=${requestScope.eventId}">
         <div class="form-group">
             <br> <label for="title"><i class="zmdi zmdi-account-o"></i></label>
             <input type="text"
@@ -55,9 +52,6 @@
                    name="title"
                    id="title"
                    placeholder="<fmt:message key="event.crete.title">Title</fmt:message>" required>
-            <%--                <small class="text-danger" th:if="${#fields.hasErrors('title')}"--%>
-            <%--                       th:errors="*{title}">Validation error--%>
-            <%--                </small>--%>
         </div>
 
         <div class="form-group">
@@ -67,9 +61,6 @@
                         id="scheduledDate"
                         value="${requestScope.scheduledDate}"
                         placeholder="<fmt:message key="event.scheduled.date">ScheduledDate</fmt:message>" required>
-            <%--                <small class="text-danger" th:if="${#fields.hasErrors('scheduledDate')}"--%>
-            <%--                       th:errors="*{scheduledDate}">Validation error--%>
-            <%--                </small>--%>
         </div>
         <div>
             <br>
@@ -78,6 +69,14 @@
         </div>
         </form>
     </div>
+    <c:if test="${requestScope.event_not_found == true}">
+        <div class="alert alert-danger alert" role="alert">
+            <fmt:message key="valid.event.not.found.message"/>
+            <a href="${contextPath}/event/all">
+                <fmt:message key="valid.event.not.found.message.return">return</fmt:message>
+            </a>
+        </div>
+    </c:if>
 </div>
 
 <div class="card text-center container  mt-5 w-50 shadow-lg">
@@ -93,20 +92,18 @@
                 </c:forEach>
                 <td>
                     <a class="btn btn-outline-success"
-                       href="${contextPath}/event/edit?eventId=${requestScope.eventId}/topic&topicId=${requestScope.topicId}">
+                       href="<%--${contextPath}/event/edit?eventId=${requestScope.eventId}/topic&topicId=${requestScope.topicId}--%>">
                         <fmt:message key="topic.assign.speaker">Choose</fmt:message>
                     </a>
                 </td>
             </tr>
             <tr>
                 <form method="POST" class="register-form"
-                      action="${contextPath}/event/{id}/topic/add(id=${event.getId()})"
-                <%--                      th:object="${topic}">--%>
+                      action="<%--${contextPath}/event/{id}/topic/add(id=${event.getId()})--%>">
                 <td>
                     <div class="form-group">
                         <br> <label for="title"><i class="zmdi zmdi-account-o"></i></label>
                         <input type="text"
-                        <%--                                   th:field="*{title}"--%>
                                value="${requestScope.title}"
                                placeholder="<fmt:message key="topic.title">Title</fmt:message>" required>
                     </div>

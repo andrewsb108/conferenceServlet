@@ -1,5 +1,6 @@
 package com.servlet.project.model.dao.impl;
 
+import com.servlet.project.exceptions.EventAlreadyExistException;
 import com.servlet.project.exceptions.UserAlreadyExistException;
 import com.servlet.project.model.dao.EventDao;
 import com.servlet.project.model.dao.mapper.EventMapper;
@@ -7,7 +8,6 @@ import com.servlet.project.model.entity.Event;
 import com.servlet.project.util.DBQueries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -72,7 +72,32 @@ public class EventDaoImpl implements EventDao {
 
     @Override
     public Optional<Event> update(Event event) {
+        try(PreparedStatement ps = connection.prepareStatement(DBQueries.UPDATE_EVENT_QUERY)) {
+            ps.setString(1, event.getTitle());
+            ps.setObject(2, event.getScheduledDate());
+            ps.setLong(3, event.getId());
+            boolean isUpdated = ps.executeUpdate() > 0;
+            if (isUpdated) {
+                return Optional.of(event);
+            }
+        } catch (SQLIntegrityConstraintViolationException ex1) {
+            throw new EventAlreadyExistException();
+        } catch (SQLException ex2) {
+            log.error("Can not provide event update operation", ex2);
+        }
         return Optional.empty();
+    }
+
+    @Override
+    public boolean deleteById(long id) {
+        try (PreparedStatement statement =
+                     connection.prepareStatement(DBQueries.DELETE_EVENT_BY_ID_QUERY)) {
+            statement.setLong(1, id);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            log.error("Can not provide event deleteById operation", e);
+        }
+        return false;
     }
 
     @Override

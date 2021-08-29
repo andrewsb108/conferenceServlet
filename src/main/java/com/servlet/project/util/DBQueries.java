@@ -11,13 +11,13 @@ public class DBQueries {
 
     public static final String FIND_EVENT_BY_ID_QUERY = "SELECT * FROM events WHERE id = ?";
     public static final String FIND_ALL_EVENTS_QUERY = "SELECT * FROM events";
-    public static final String SAVE_EVENT_QUERY = "INSERT INTO events (title, topicId, participantId, scheduledDate) VALUES (?, ?, ?, ?, ?)";
+    public static final String SAVE_EVENT_QUERY = "INSERT INTO events (title, scheduled_date) VALUES (?, ?)";
 
     public static final String SAVE_PARTICIPANTS_QUERY = "INSERT INTO participants (is_speaker, nick_name, user_id, event_id) VALUES (?, ?, ?, ?)";
 
     public static final String FIND_BY_EVENT_ID_FROM_TOPIC_QUERY = "SELECT * FROM topics WHERE event_id = ?";
-
-
+    public static final String DELETE_EVENT_BY_ID_QUERY = "DELETE FROM events WHERE id = ?";
+    public static final String UPDATE_EVENT_QUERY = "UPDATE events SET title = ?, scheduled_date = ? WHERE id = ?";
 
 }
 

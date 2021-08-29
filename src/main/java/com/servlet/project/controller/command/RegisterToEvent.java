@@ -30,7 +30,7 @@ public class RegisterToEvent implements Command {
 
         HttpSession session = request.getSession();
         User user = securityService.getLoggedUser(session);
-        Long eventId = Long.valueOf(request.getParameter("id"));
+        long eventId = Long.valueOf(request.getParameter("id"));
         String nickName = request.getParameter("nickName");
         Boolean isSpeaker = request.getParameter("speaker") != null;
 

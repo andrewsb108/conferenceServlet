@@ -13,6 +13,7 @@ import com.servlet.project.model.entity.Participant;
 import com.servlet.project.model.entity.Role;
 import com.servlet.project.model.entity.User;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -60,13 +61,13 @@ public class EventService {
         return eventDto;
     }
 
-    public EventDto getEventById(Long id) {
+    public EventDto getEventById(long id) {
         Optional<Event> event = eventDao.findById(id);
         return event.map(this::convertEventToEventDto)
                 .orElseThrow(() -> new EventNotFoundException("event.not.found"));
     }
 
-    public void registerToEvent(Long eventId, String nickName, Boolean isSpeaker, User user) {
+    public void registerToEvent(long eventId, String nickName, Boolean isSpeaker, User user) {
         Participant participant = new Participant();
 
         participant.setNickName(nickName);
@@ -79,5 +80,19 @@ public class EventService {
             userDao.updateUserRole(user);
         }
         participantDao.save(participant);
+    }
+
+    public boolean deleteById(long id) throws SQLException {
+        return eventDao.deleteById(id);
+    }
+
+    public Optional<Event> updateEvent(long id, String title, String scheduledDate) {
+        LocalDateTime date = LocalDateTime.parse(scheduledDate);
+       return eventDao.update(Event.builder()
+                .id(id)
+                .title(title)
+                .scheduledDate(LocalDateTime.parse(scheduledDate))
+                .build());
+
     }
 }
