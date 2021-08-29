@@ -19,5 +19,7 @@ public class DBQueries {
     public static final String DELETE_EVENT_BY_ID_QUERY = "DELETE FROM events WHERE id = ?";
     public static final String UPDATE_EVENT_QUERY = "UPDATE events SET title = ?, scheduled_date = ? WHERE id = ?";
 
+    public static final String SAVE_TOPIC_QUERY = "INSERT INTO users (title, speaker_id, event_id) VALUES (?, ?, ?)";
+
 }
 

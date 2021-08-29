@@ -1,19 +1,15 @@
 package com.servlet.project.model.service;
 
-import com.servlet.project.exceptions.EventAlreadyExistException;
+import com.servlet.project.exceptions.EventDeleteException;
 import com.servlet.project.exceptions.EventNotFoundException;
 import com.servlet.project.model.dao.EventDao;
 import com.servlet.project.model.dao.ParticipantDao;
+import com.servlet.project.model.dao.TopicDao;
 import com.servlet.project.model.dao.UserDao;
 import com.servlet.project.model.dao.impl.DaoFactory;
-import com.servlet.project.model.dao.mapper.EventMapper;
 import com.servlet.project.model.dto.EventDto;
-import com.servlet.project.model.entity.Event;
-import com.servlet.project.model.entity.Participant;
-import com.servlet.project.model.entity.Role;
-import com.servlet.project.model.entity.User;
+import com.servlet.project.model.entity.*;
 
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,6 +21,8 @@ public class EventService {
 
     private final EventDao eventDao = DaoFactory.createEventDao();
     private final UserDao userDao = DaoFactory.createUserDao();
+    private final TopicDao topicDao = DaoFactory.createTopicDao();
+
     private final ParticipantDao participantDao = DaoFactory.createParticipantDao();
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -82,17 +80,27 @@ public class EventService {
         participantDao.save(participant);
     }
 
-    public boolean deleteById(long id) throws SQLException {
+    public boolean deleteById(long id) throws EventDeleteException {
         return eventDao.deleteById(id);
     }
 
     public Optional<Event> updateEvent(long id, String title, String scheduledDate) {
-        LocalDateTime date = LocalDateTime.parse(scheduledDate);
        return eventDao.update(Event.builder()
                 .id(id)
                 .title(title)
                 .scheduledDate(LocalDateTime.parse(scheduledDate))
                 .build());
 
+    }
+
+    public Topic createTopic(long id, String title, long speakerId, long eventId) {
+        Topic topic = Topic.builder()
+                .id(id)
+                .title(title)
+                .speakerId(speakerId)
+                .eventId(eventId).build();
+
+        topicDao.save(topic);
+        return topic;
     }
 }

@@ -28,6 +28,7 @@ public class CommandResolver {
         put("event/create", new ModeratorCreateEvent(eventService));
         put("event/edit", new ModeratorEditEvent(eventService, topicService));
         put("event/delete", new ModeratorDeleteEvent(eventService));
+        put("event/topic/add", new ModeratorCreateTopic(eventService));
 
     }};
 

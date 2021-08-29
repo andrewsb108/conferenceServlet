@@ -1,9 +1,9 @@
 package com.servlet.project.controller.command;
 
+import com.servlet.project.exceptions.EventDeleteException;
 import com.servlet.project.model.service.EventService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 
 public class ModeratorDeleteEvent implements Command {
 
@@ -19,8 +19,7 @@ public class ModeratorDeleteEvent implements Command {
 
         try {
             eventService.deleteById(eventId);
-            // todo: change exception to be more specific
-        } catch (SQLException e) {
+        } catch (EventDeleteException e) {
             request.getSession().setAttribute(
                     "event_error_message","valid.event.not.deletable.message");
         }

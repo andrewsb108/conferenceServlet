@@ -1,5 +1,6 @@
 package com.servlet.project.model.dao.impl;
 
+import com.servlet.project.exceptions.EventAlreadyExistException;
 import com.servlet.project.model.dao.TopicDao;
 import com.servlet.project.model.dao.mapper.TopicMapper;
 import com.servlet.project.model.entity.Topic;
@@ -7,10 +8,7 @@ import com.servlet.project.util.DBQueries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +51,17 @@ public class TopicDaoImpl implements TopicDao {
 
     @Override
     public boolean save(Topic topic) {
+        try (PreparedStatement ps =
+                     connection.prepareStatement(DBQueries.SAVE_TOPIC_QUERY)) {
+            ps.setString(1, topic.getTitle());
+            ps.setLong(2, topic.getSpeakerId());
+            ps.setLong(3, topic.getEventId());
+        } catch (SQLIntegrityConstraintViolationException ex1) {
+            log.info("Attempt to create an existing topic: {}", topic.getTitle());
+            throw new EventAlreadyExistException();
+        } catch (SQLException ex2) {
+            log.error("Can not provide topic save operation", ex2);
+        }
         return false;
     }
 

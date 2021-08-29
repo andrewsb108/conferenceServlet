@@ -54,8 +54,6 @@ public class ModeratorEditEvent implements Command {
                 return resolveAdmin("event_edit");
             }
             try {
-//                    EventDto eventDto = new EventDto();
-//                    eventDto.setId(eventId);
                 eventService.updateEvent(eventId, title, scheduledDate);
             } catch (EventAlreadyExistException e) {
                 request.setAttribute("id", eventId);

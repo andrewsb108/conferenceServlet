@@ -89,23 +89,24 @@
             <tr>
                 <c:forEach var="topicItem" items="${requestScope.topics}">
                     <td><span>${topicItem.title}</span></td>
-                </c:forEach>
                 <td>
                     <a class="btn btn-outline-success"
-                       href="<%--${contextPath}/event/edit?eventId=${requestScope.eventId}/topic&topicId=${requestScope.topicId}--%>">
+                       href="${contextPath}/event/edit?eventId=${requestScope.eventId}/topic&topicId=${requestScope.topicId}">
                         <fmt:message key="topic.assign.speaker">Choose</fmt:message>
                     </a>
                 </td>
+                </c:forEach>
             </tr>
             <tr>
                 <form method="POST" class="register-form"
-                      action="<%--${contextPath}/event/{id}/topic/add(id=${event.getId()})--%>">
+                      action="${contextPath}/event/topic/add?id=${requestScope.eventId}">
                 <td>
                     <div class="form-group">
                         <br> <label for="title"><i class="zmdi zmdi-account-o"></i></label>
                         <input type="text"
                                value="${requestScope.title}"
-                               placeholder="<fmt:message key="topic.title">Title</fmt:message>" required>
+                               placeholder="<fmt:message key="topic.title">Title</fmt:message>"
+                               name="title" required>
                     </div>
                 </td>
                 <td>
@@ -114,6 +115,15 @@
                         <fmt:message key="topic.create.title">Create</fmt:message>
                     </button>
                 </td>
+                    <c:if test="${sessionScope.topic_error_message != null}">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <fmt:message key="${sessionScope.topic_error_message}"/>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <a href="<c:remove var='topic_error_message' scope="session"/>"
+                                   style="color: #6c757d; text-decoration: none"><span aria-hidden="true">&times;</span></a>
+                            </button>
+                        </div>
+                    </c:if>
                 </form>
             </tr>
             </tbody>
