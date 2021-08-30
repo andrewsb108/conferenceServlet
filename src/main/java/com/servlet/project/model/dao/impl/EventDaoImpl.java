@@ -58,7 +58,7 @@ public class EventDaoImpl implements EventDao {
         try (PreparedStatement statement =
                      connection.prepareStatement(DBQueries.SAVE_EVENT_QUERY)) {
             statement.setString(1, event.getTitle());
-            statement.setObject(2, LocalDateTime.class);
+            statement.setObject(2, event.getScheduledDate());
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException ex1) {
             log.warn("Attempt to create existing event [title: {}]", event.getTitle());

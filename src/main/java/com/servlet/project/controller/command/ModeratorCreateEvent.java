@@ -10,8 +10,6 @@ import static com.servlet.project.util.ViewResolver.resolveAdmin;
 public class ModeratorCreateEvent implements Command {
 
     private final EventService eventService;
-    public static final String REDIRECT_TO_MODERATOR = "redirect:/event_create";
-
 
     public ModeratorCreateEvent(EventService eventService) {
         this.eventService = eventService;
@@ -24,18 +22,16 @@ public class ModeratorCreateEvent implements Command {
             return resolveAdmin("event_create");
         }
 
-        String id = request.getParameter("id");
         String title = request.getParameter("title");
         String scheduledDate = request.getParameter("scheduledDate");
 
-        if (Objects.isNull(id)) {
-            return REDIRECT_TO_MODERATOR;
+        if (Objects.isNull(title)) {
+            return "redirect:/event/all";
         }
 
-        long eventId = Long.parseLong(id);
-        eventService.createEvent(eventId, title, scheduledDate);
+        eventService.createEvent(title, scheduledDate);
 
-        return resolveAdmin(REDIRECT_TO_MODERATOR);
+        return "redirect:/event/all";
 
     }
 }

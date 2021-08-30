@@ -27,11 +27,10 @@ public class EventService {
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    public boolean createEvent(long id, String title, String scheduledDate) {
+    public boolean createEvent(String title, String scheduledDate) {
         return eventDao.save(Event.builder()
-                .id(id)
                 .title(title)
-                .scheduledDate(LocalDateTime.parse(scheduledDate, formatter))
+                .scheduledDate(LocalDateTime.parse(scheduledDate))
                 .build());
     }
 
@@ -85,7 +84,7 @@ public class EventService {
     }
 
     public Optional<Event> updateEvent(long id, String title, String scheduledDate) {
-       return eventDao.update(Event.builder()
+        return eventDao.update(Event.builder()
                 .id(id)
                 .title(title)
                 .scheduledDate(LocalDateTime.parse(scheduledDate))
@@ -93,12 +92,11 @@ public class EventService {
 
     }
 
-    public Topic createTopic(long id, String title, long speakerId, long eventId) {
+    public Topic createTopic(String title, long eventId) {
         Topic topic = Topic.builder()
-                .id(id)
                 .title(title)
-                .speakerId(speakerId)
                 .eventId(eventId).build();
+
 
         topicDao.save(topic);
         return topic;

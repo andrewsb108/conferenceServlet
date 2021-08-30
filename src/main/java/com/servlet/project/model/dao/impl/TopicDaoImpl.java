@@ -41,6 +41,16 @@ public class TopicDaoImpl implements TopicDao {
 
     @Override
     public Optional<Topic> findById(long id) {
+        try (PreparedStatement ps = connection.prepareStatement(
+                DBQueries.FIND_TOPIC_BY_ID_QUERY)) {
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return Optional.ofNullable(topicMapper.extract(rs));
+            }
+        } catch (SQLException e) {
+            log.warn("ERROR: can't provide topic findById operation!", e);
+        }
         return Optional.empty();
     }
 
@@ -54,8 +64,11 @@ public class TopicDaoImpl implements TopicDao {
         try (PreparedStatement ps =
                      connection.prepareStatement(DBQueries.SAVE_TOPIC_QUERY)) {
             ps.setString(1, topic.getTitle());
-            ps.setLong(2, topic.getSpeakerId());
-            ps.setLong(3, topic.getEventId());
+            ps.setLong(2, topic.getEventId());
+            boolean saved = ps.executeUpdate() > 0;
+            if (saved) {
+                return true;
+            }
         } catch (SQLIntegrityConstraintViolationException ex1) {
             log.info("Attempt to create an existing topic: {}", topic.getTitle());
             throw new EventAlreadyExistException();

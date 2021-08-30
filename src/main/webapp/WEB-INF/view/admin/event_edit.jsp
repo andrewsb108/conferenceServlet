@@ -86,20 +86,23 @@
         <table class="table">
             <tbody>
 
-            <tr>
+
                 <c:forEach var="topicItem" items="${requestScope.topics}">
+            <tr>
                     <td><span>${topicItem.title}</span></td>
                 <td>
                     <a class="btn btn-outline-success"
-                       href="${contextPath}/event/edit?eventId=${requestScope.eventId}/topic&topicId=${requestScope.topicId}">
-                        <fmt:message key="topic.assign.speaker">Choose</fmt:message>
+                       href="${contextPath}/event/assign/speaker?eventId=${requestScope.eventId}&topicId=${topicItem.id}">
+                        <fmt:message key="topic.assign.speaker">Assign speaker</fmt:message>
                     </a>
                 </td>
-                </c:forEach>
             </tr>
+                </c:forEach>
+
+
             <tr>
                 <form method="POST" class="register-form"
-                      action="${contextPath}/event/topic/add?id=${requestScope.eventId}">
+                      action="${contextPath}/event/topic/add?eventId=${requestScope.eventId}">
                 <td>
                     <div class="form-group">
                         <br> <label for="title"><i class="zmdi zmdi-account-o"></i></label>

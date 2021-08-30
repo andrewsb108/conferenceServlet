@@ -5,6 +5,9 @@ import com.servlet.project.model.service.EventService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
+import java.util.Optional;
+
+import static com.servlet.project.util.ViewResolver.resolveAdmin;
 
 public class ModeratorCreateTopic implements Command {
 
@@ -17,24 +20,23 @@ public class ModeratorCreateTopic implements Command {
     @Override
     public String execute(HttpServletRequest request) {
 
-        long topicId = Long.valueOf(request.getParameter("id"));
         String title = request.getParameter("title");
-        long speakerId = Long.valueOf(request.getParameter("speakerId"));
-        long eventId = Long.valueOf(request.getParameter("eventId"));
+        Long eventId = Optional.ofNullable(request.getParameter("eventId"))
+                .map(Long::valueOf)
+                .orElse(null);
 
-
-        if (Objects.isNull(title) || title.isEmpty()) {
+        if (Objects.isNull(title) || title.isEmpty() || Objects.isNull(eventId)) {
             request.getSession().setAttribute(
                     "topic_error_message", "valid.new.topic.empty");
-            return "redirect:event_edit";
+            return "redirect:/event/edit";
         }
 
         try {
-            eventService.createTopic(topicId, title, speakerId, eventId);
+            eventService.createTopic(title, eventId);
         } catch (TopicAlreadyExistException e) {
             request.getSession().setAttribute(
                     "topic_error_message", "valid.new.topic.exist");
         }
-        return "redirect:event/edit";
+        return "redirect:/event/edit?id=" + eventId;
     }
 }

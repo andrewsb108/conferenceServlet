@@ -19,7 +19,8 @@ public class DBQueries {
     public static final String DELETE_EVENT_BY_ID_QUERY = "DELETE FROM events WHERE id = ?";
     public static final String UPDATE_EVENT_QUERY = "UPDATE events SET title = ?, scheduled_date = ? WHERE id = ?";
 
-    public static final String SAVE_TOPIC_QUERY = "INSERT INTO users (title, speaker_id, event_id) VALUES (?, ?, ?)";
+    public static final String SAVE_TOPIC_QUERY = "INSERT INTO topics (title, event_id) VALUES (?, ?)";
+    public static final String FIND_TOPIC_BY_ID_QUERY = "SELECT * FROM topics WHERE id = ?";
 
 }
 

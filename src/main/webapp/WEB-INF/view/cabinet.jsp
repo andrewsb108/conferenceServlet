@@ -25,22 +25,22 @@
 <%--      th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">--%>
 
 <%--<div th:fragment="menu">--%>
-    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
-        <div class="container-fluid">
-            <div>
-                <a href="?lang=en" class="btn btn-outline-success">English</a>
-                <a href="?lang=uk" class="btn btn-outline-success">Українська</a>
-            </div>
-            <form action="${contextPath}/logout" name="logout" method="POST">
-                <a class="btn btn-outline-success" href="${contextPath}/index"> <fmt:message key="back.button">Back</fmt:message></a>
-                <button type="submit" class="btn btn-outline-success" name="logout" value="logout">
-                        <fmt:message key="login.out">Log out</fmt:message>
-                </button>
-            </form>
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+    <div class="container-fluid">
+        <div>
+            <a href="?lang=en" class="btn btn-outline-success">English</a>
+            <a href="?lang=uk" class="btn btn-outline-success">Українська</a>
         </div>
-    </nav>
+        <form action="${contextPath}/logout" name="logout" method="POST">
+            <a class="btn btn-outline-success" href="${contextPath}/index"> <fmt:message
+                    key="back.button">Back</fmt:message></a>
+            <button type="submit" class="btn btn-outline-success" name="logout" value="logout">
+                <fmt:message key="login.out">Log out</fmt:message>
+            </button>
+        </form>
+    </div>
+</nav>
 <%--</div>--%>
-
 
 
 <div class="container w-75 bg-light">
@@ -49,17 +49,18 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col"> <fmt:message key="event.crete.title">Title</fmt:message></th>
-                    <th scope="col"> <fmt:message key="event.scheduled.date">ScheduledDate</fmt:message></th>
+                    <th scope="col"><fmt:message key="event.crete.title">Title</fmt:message></th>
+                    <th scope="col"><fmt:message key="event.scheduled.date">ScheduledDate</fmt:message></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
                 <c:forEach var="event" items="${requestScope.events}">
-                    <td><span>${event.title}</span></td>
-                    <td><span>${event.scheduledDate}</span></td>
+                    <tr>
+                        <td><span>${event.title}</span></td>
+                        <td><span>${event.scheduledDate}</span></td>
+                    </tr>
                 </c:forEach>
-                </tr>
+
                 </tbody>
             </table>
         </div>

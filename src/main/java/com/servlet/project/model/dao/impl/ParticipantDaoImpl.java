@@ -40,7 +40,6 @@ public class ParticipantDaoImpl implements ParticipantDao {
             ps.setLong(4, participant.getEventId());
             ps.executeUpdate();
 
-
         } catch (SQLIntegrityConstraintViolationException ex) {
             throw new UniqueParticipantException();
         } catch (SQLException ex) {
