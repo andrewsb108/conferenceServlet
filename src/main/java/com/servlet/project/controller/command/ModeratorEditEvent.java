@@ -25,7 +25,8 @@ public class ModeratorEditEvent implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        Long eventId = Optional.ofNullable(request.getParameter("id"))
+
+        Long eventId = Optional.ofNullable(request.getParameter("eventId"))
                 .map(Long::valueOf)
                 .orElse(null);
 
@@ -44,19 +45,19 @@ public class ModeratorEditEvent implements Command {
             String scheduledDate = request.getParameter("scheduledDate");
             if (Objects.isNull(title) || title.isEmpty()) {
                 request.setAttribute("event_empty_name", true);
-                request.setAttribute("id", eventId);
+                request.setAttribute("eventId", eventId);
                 return resolveAdmin("event_edit");
             }
 
             if (Objects.isNull(scheduledDate) || scheduledDate.isEmpty()) {
                 request.setAttribute("event_empty_name", true);
-                request.setAttribute("id", eventId);
+                request.setAttribute("eventId", eventId);
                 return resolveAdmin("event_edit");
             }
             try {
                 eventService.updateEvent(eventId, title, scheduledDate);
             } catch (EventAlreadyExistException e) {
-                request.setAttribute("id", eventId);
+                request.setAttribute("eventId", eventId);
                 request.setAttribute("event_already_exist", true);
                 return resolveAdmin("event_edit");
             }

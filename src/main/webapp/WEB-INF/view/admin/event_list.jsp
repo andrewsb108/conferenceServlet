@@ -60,12 +60,12 @@
                         <td><span>${event.scheduledDate}</span></td>
                         <td>
                             <a class="btn btn-outline-success"
-                               href="${contextPath}/event/edit?id=${event.id}">
+                               href="${contextPath}/event/edit?eventId=${event.id}">
                                 <fmt:message key="event.edit.button">Edit</fmt:message></a>
                         </td>
                         <td>
                             <a class="btn btn-outline-danger"
-                               href="${contextPath}/event/delete?id=${event.id}">
+                               href="${contextPath}/event/delete?eventId=${event.id}">
                                 <fmt:message key="event.delete.button">Delete</fmt:message></a>
                         </td>
                     </tr>

@@ -15,14 +15,9 @@ public class ModeratorDeleteEvent implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        long eventId = Long.valueOf(request.getParameter("id"));
-
-        try {
+        long eventId = Long.valueOf(request.getParameter("eventId"));
             eventService.deleteById(eventId);
-        } catch (EventDeleteException e) {
-            request.getSession().setAttribute(
-                    "event_error_message","valid.event.not.deletable.message");
-        }
+
         return "redirect:/event/all";
     }
 }

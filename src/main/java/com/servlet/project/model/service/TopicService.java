@@ -4,6 +4,7 @@ import com.servlet.project.model.dao.TopicDao;
 import com.servlet.project.model.dao.UserDao;
 import com.servlet.project.model.dao.impl.DaoFactory;
 import com.servlet.project.model.dto.TopicDto;
+import com.servlet.project.model.entity.Role;
 import com.servlet.project.model.entity.Topic;
 import com.servlet.project.model.entity.User;
 
@@ -24,10 +25,18 @@ public class TopicService {
     }
 
     public void assignSpeaker(long eventId, long topicId, long speakerId) {
-        Optional<User> speaker = userDao.findById(topicId);
-        Optional<Topic> topic = topicDao.findById(speakerId);
+        User user = User.builder()
+                .id(speakerId)
+                .role(Role.SPEAKER)
+                .build();
 
-//        topic.setSpeaker(speaker);
-        topicDao.save(topic.orElseThrow());
+        Topic topic = Topic.builder()
+                .id(topicId)
+                .speakerId(speakerId)
+                .eventId(eventId)
+                .build();
+
+        topicDao.updateTopic(topic);
+        userDao.update(user);
     }
 }

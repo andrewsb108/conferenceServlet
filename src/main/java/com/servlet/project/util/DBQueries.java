@@ -21,6 +21,8 @@ public class DBQueries {
 
     public static final String SAVE_TOPIC_QUERY = "INSERT INTO topics (title, event_id) VALUES (?, ?)";
     public static final String FIND_TOPIC_BY_ID_QUERY = "SELECT * FROM topics WHERE id = ?";
+    public static final String UPDATE_TOPIC_QUERY = "UPDATE topics SET speaker_id = ?, event_id = ? WHERE id = ?";
+
 
 }
 

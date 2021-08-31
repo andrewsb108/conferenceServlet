@@ -1,6 +1,7 @@
 package com.servlet.project.model.dao.impl;
 
 import com.servlet.project.exceptions.EventAlreadyExistException;
+import com.servlet.project.exceptions.TopicAlreadyExistException;
 import com.servlet.project.model.dao.TopicDao;
 import com.servlet.project.model.dao.mapper.TopicMapper;
 import com.servlet.project.model.entity.Topic;
@@ -76,6 +77,25 @@ public class TopicDaoImpl implements TopicDao {
             log.error("Can not provide topic save operation", ex2);
         }
         return false;
+    }
+
+    @Override
+    public Optional<Topic> updateTopic(Topic topic) {
+        try (PreparedStatement ps =
+                     connection.prepareStatement(DBQueries.UPDATE_TOPIC_QUERY)) {
+            ps.setLong(1, topic.getSpeakerId());
+            ps.setLong(2, topic.getEventId());
+            ps.setLong(3, topic.getId());
+            boolean isUpdated = ps.executeUpdate() > 0;
+            if (isUpdated) {
+                return Optional.of(topic);
+            }
+        } catch (SQLIntegrityConstraintViolationException ex1) {
+            throw new TopicAlreadyExistException();
+        } catch (SQLException ex2) {
+            log.error("Can not provide updateTopic update operation", ex2);
+        }
+        return Optional.empty();
     }
 
     @Override

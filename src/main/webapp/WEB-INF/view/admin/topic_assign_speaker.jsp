@@ -45,12 +45,9 @@
             <tbody>
             <tr>
                 <td><c:out value="${topic.title}"/></td>
-<%--            <td th:text="${topic.title}"/>--%>
-<%--            <td><span>${topic.title}</span></td>&ndash;%&gt;--%>
                 <td>
-<%--                    <form id="assignSpeaker" action="${contextPath}/event/edit/{eventId}/topic/{topicId}(eventId=${eventId},--%>
-<%--                     topicId=${topic.getId()})" method="post">--%>
-                        <form id="assignSpeaker" action="${contextPath}/event/edit/?eventId=${requestScope.eventId}/topic&topicId=${requestScope.topicId}<%--, topicId=${topic.id}--%>" method="post">
+<%--                        <form id="assignSpeaker" action="${contextPath}/event/edit/?eventId=${requestScope.eventId}&topicId=${requestScope.topicId}" method="post">--%>
+                        <form id="assignSpeaker" action="${contextPath}/event/assign/speaker?eventId=${requestScope.eventId}&topicId=${requestScope.topicId}" method="post">
                         <select name="speakerId" class="form-select">
                             <option value="" selected disabled><fmt:message key="topic.select.user">Select user</fmt:message></option>
                             <c:forEach var="user" items="${requestScope.users}">
