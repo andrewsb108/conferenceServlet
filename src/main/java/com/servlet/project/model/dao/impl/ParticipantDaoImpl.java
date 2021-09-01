@@ -7,7 +7,10 @@ import com.servlet.project.util.DBQueries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +35,7 @@ public class ParticipantDaoImpl implements ParticipantDao {
     }
 
     @Override
-    public boolean save(Participant participant) {
+    public Optional<Participant> save(Participant participant) {
         try (PreparedStatement ps = connection.prepareStatement(DBQueries.SAVE_PARTICIPANTS_QUERY)) {
             ps.setBoolean(1, participant.isSpeaker());
             ps.setString(2, participant.getNickName());
@@ -45,7 +48,7 @@ public class ParticipantDaoImpl implements ParticipantDao {
         } catch (SQLException ex) {
             log.warn("ERROR: can't provide participant save operation!", ex);
         }
-        return true;
+        return Optional.of(participant);
     }
 
     @Override

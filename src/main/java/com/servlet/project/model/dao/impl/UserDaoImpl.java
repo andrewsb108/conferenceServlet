@@ -85,7 +85,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean save(User user) {
+    public Optional<User> save(User user) {
         try (PreparedStatement statement =
                      connection.prepareStatement(DBQueries.SAVE_USER_QUERY)) {
             statement.setString(1, user.getFirstName());
@@ -99,9 +99,9 @@ public class UserDaoImpl implements UserDao {
             throw new UserAlreadyExistException("Such user already exists: " + user.getEmail());
         } catch (SQLException e) {
             log.error("ERROR: can't provide user save operation!", e);
-            return false;
+            return Optional.empty();
         }
-        return true;
+        return Optional.of(user);
     }
 
     @Override

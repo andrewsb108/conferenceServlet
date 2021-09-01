@@ -18,7 +18,7 @@ public class UserService {
     private static final Logger log = LogManager.getLogger(UserDaoImpl.class);
 
 
-    public UserService(SecurityService securityService) { ;
+    public UserService(SecurityService securityService) {
         this.securityService = securityService;
     }
 
@@ -39,7 +39,7 @@ public class UserService {
         return userDao.findById(id);
     }
 
-    public boolean create(String firstName,
+    public Optional<User> create(String firstName,
                                  String lastName,
                                  String email,
                                  String password,

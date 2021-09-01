@@ -61,14 +61,14 @@ public class TopicDaoImpl implements TopicDao {
     }
 
     @Override
-    public boolean save(Topic topic) {
+    public Optional<Topic> save(Topic topic) {
         try (PreparedStatement ps =
                      connection.prepareStatement(DBQueries.SAVE_TOPIC_QUERY)) {
             ps.setString(1, topic.getTitle());
             ps.setLong(2, topic.getEventId());
             boolean saved = ps.executeUpdate() > 0;
             if (saved) {
-                return true;
+                return Optional.of(topic);
             }
         } catch (SQLIntegrityConstraintViolationException ex1) {
             log.info("Attempt to create an existing topic: {}", topic.getTitle());
@@ -76,7 +76,7 @@ public class TopicDaoImpl implements TopicDao {
         } catch (SQLException ex2) {
             log.error("Can not provide topic save operation", ex2);
         }
-        return false;
+        return Optional.empty();
     }
 
     @Override

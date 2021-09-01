@@ -1,20 +1,31 @@
 package com.servlet.project.model.service;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import com.servlet.project.model.dao.UserDao;
+import com.servlet.project.model.dao.impl.UserDaoImpl;
+import com.servlet.project.model.entity.Role;
+import com.servlet.project.model.entity.User;
 import org.junit.jupiter.api.Test;
+import org.mockito.stubbing.OngoingStubbing;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Optional;
+
+import static org.mockito.Mockito.*;
 
 class UserServiceTest {
 
+    private final UserDao userDaoMock = mock(UserDaoImpl.class);
+    private final SecurityService securityServiceMock = mock(SecurityService.class);
+    private final UserService userService = spy(new UserService(securityServiceMock));
 
-    @BeforeEach
-    void setUp() {
-    }
+    private final String firstName = "firstName";
+    private final String lastName = "lastName";
+    private final String email = "user@mail.com";
+    private final String password = "1234";
+    private final Role role = Role.USER;
 
-    @AfterEach
-    void tearDown() {
+    @Test
+    void create_test() {
+
     }
 
     @Test

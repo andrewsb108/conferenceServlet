@@ -27,7 +27,7 @@ public class EventService {
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    public boolean createEvent(String title, String scheduledDate) {
+    public Optional<Event> createEvent(String title, String scheduledDate) {
         return eventDao.save(Event.builder()
                 .title(title)
                 .scheduledDate(LocalDateTime.parse(scheduledDate))

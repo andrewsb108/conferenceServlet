@@ -54,7 +54,7 @@ public class EventDaoImpl implements EventDao {
     }
 
     @Override
-    public boolean save(Event event) {
+    public Optional<Event> save(Event event) {
         try (PreparedStatement statement =
                      connection.prepareStatement(DBQueries.SAVE_EVENT_QUERY)) {
             statement.setString(1, event.getTitle());
@@ -65,9 +65,9 @@ public class EventDaoImpl implements EventDao {
             throw new UserAlreadyExistException("Such event already exists: " + event.getTitle());
         } catch (SQLException e) {
             log.error("ERROR: can't provide event save operation!", e);
-            return false;
+            return Optional.empty();
         }
-        return true;
+        return Optional.of(event);
     }
 
     @Override
