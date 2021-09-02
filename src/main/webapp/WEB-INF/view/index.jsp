@@ -29,25 +29,14 @@
             <a href="?lang=uk" class="btn btn-outline-success">Українська</a>
         </div>
 
-        <c:if test="${requestScope.loggedUser.role == 'SPEAKER'}">
+<%--        <c:if test="${requestScope.loggedUser.role == 'SPEAKER'}">--%>
             <a class="btn btn-outline-success" href="${contextPath}/index/cabinet-entrance">
                 <fmt:message key="speaker.cabinet.entrance">Cabinet</fmt:message></a>
-        </c:if>
-<%--        <div sec:authorize="hasAuthority('SPEAKER')">--%>
-<%--            <a class="btn btn-outline-success" href="${contextPath}/index/cabinet-entrance">--%>
-<%--                <fmt:message key="speaker.cabinet.entrance">Cabinet</fmt:message></a>--%>
-<%--        </div>--%>
-
+<%--        </c:if>--%>
         <c:if test="${requestScope.loggedUser.role == 'MODERATOR'}">
             <a class="btn btn-outline-success" href="${contextPath}/event/all">--%>
                 <fmt:message key="event.list">Events list</fmt:message></a>
         </c:if>
-
-        <%--        <div sec:authorize="hasAuthority('MODERATOR')">--%>
-        <%--            <a class="btn btn-outline-success" href="${contextPath}/event/all">--%>
-        <%--                <fmt:message key="event.list">Events list</fmt:message></a>--%>
-        <%--        </div>--%>
-
         <form action="${contextPath}/logout" name="logout" method="POST">
             <button type="submit" class="btn btn-outline-success" name="logout" value="logout">
                 <fmt:message key="login.out">Log out</fmt:message>

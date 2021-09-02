@@ -44,7 +44,7 @@
     <h2 class="card-header"><fmt:message key="event.edit">Edit event</fmt:message></h2>
     <div class="col py-3">
         <form method="POST" class="register-form" id="register-form"
-              action="${contextPath}/event/edit?id=${requestScope.eventId}">
+              action="${contextPath}/event/edit?eventId=${requestScope.eventId}">
         <div class="form-group">
             <br> <label for="title"><i class="zmdi zmdi-account-o"></i></label>
             <input type="text"

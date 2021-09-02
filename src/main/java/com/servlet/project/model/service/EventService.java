@@ -101,4 +101,8 @@ public class EventService {
         topicDao.save(topic);
         return topic;
     }
+
+    public List<Event> findByIdIn(List<Long> eventIds) {
+        return eventDao.findByIdIn(eventIds);
+    }
 }

@@ -1,10 +1,8 @@
 package com.servlet.project.util;
 
 import com.servlet.project.controller.command.*;
-import com.servlet.project.model.service.EventService;
-import com.servlet.project.model.service.SecurityService;
-import com.servlet.project.model.service.TopicService;
-import com.servlet.project.model.service.UserService;
+import com.servlet.project.model.dao.impl.DaoFactory;
+import com.servlet.project.model.service.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +12,10 @@ import static com.servlet.project.util.ViewResolver.resolve;
 public class CommandResolver {
 
     private static final SecurityService securityService = new SecurityService();
-    private static final UserService userService = new UserService(securityService);
+    private static final UserService userService = new UserService(DaoFactory.createUserDao(), securityService);
     private static final EventService eventService = new EventService();
     private static final TopicService topicService = new TopicService();
+    private static final ParticipantService participantService = new ParticipantService();
 
     private static final Map<String, Command> commands = new HashMap<>() {{
         put("logout", new Logout());
@@ -30,6 +29,7 @@ public class CommandResolver {
         put("event/delete", new ModeratorDeleteEvent(eventService));
         put("event/topic/add", new ModeratorCreateTopic(eventService));
         put("event/assign/speaker", new ModeratorAssignSpeaker(userService, topicService));
+        put("index/cabinet-entrance", new SpeakerEvents(securityService, eventService, participantService));
 
     }};
 

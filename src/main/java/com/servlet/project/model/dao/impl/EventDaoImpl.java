@@ -11,8 +11,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static com.servlet.project.util.DBQueries.SQL_FIND_FROM_EVENT_IDS;
 
 public class EventDaoImpl implements EventDao {
     private static final Logger log = LogManager.getLogger(EventDaoImpl.class);
@@ -98,6 +102,33 @@ public class EventDaoImpl implements EventDao {
             log.error("Can not provide event deleteById operation", e);
         }
         return false;
+    }
+
+    public static String preparePlaceHolders(int length) {
+        return String.join(",", Collections.nCopies(length, "?"));
+    }
+
+    public static void setValues(PreparedStatement preparedStatement, Object... values) throws SQLException {
+        for (int i = 0; i < values.length; i++) {
+            preparedStatement.setObject(i + 1, values[i]);
+        }
+    }
+
+    @Override
+    public List<Event> findByIdIn(List<Long> eventIds) {
+        String sql = String.format(SQL_FIND_FROM_EVENT_IDS, preparePlaceHolders(eventIds.size()));
+        try (PreparedStatement ps = connection.prepareStatement(sql,
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY)) {
+            setValues(ps, eventIds.toArray());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return eventMapper.extractAll(rs);
+            }
+        } catch (SQLException e) {
+            log.warn("ERROR: can't provide event findByIdIn operation!", e);
+        }
+        return new ArrayList<>();
     }
 
     @Override

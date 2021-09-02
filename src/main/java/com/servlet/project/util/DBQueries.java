@@ -12,8 +12,12 @@ public class DBQueries {
     public static final String FIND_EVENT_BY_ID_QUERY = "SELECT * FROM events WHERE id = ?";
     public static final String FIND_ALL_EVENTS_QUERY = "SELECT * FROM events";
     public static final String SAVE_EVENT_QUERY = "INSERT INTO events (title, scheduled_date) VALUES (?, ?)";
+    public static final String SQL_FIND_FROM_EVENT_IDS = "SELECT * FROM events WHERE id IN (%s)";
 
     public static final String SAVE_PARTICIPANTS_QUERY = "INSERT INTO participants (is_speaker, nick_name, user_id, event_id) VALUES (?, ?, ?, ?)";
+    public static final String FIND_ALL_PARTICIPANTS_QUERY = "SELECT * FROM participants";
+    public static final String FIND_PARTICIPANT_BY_ID_QUERY = "SELECT * FROM participants WHERE id = ?";
+    public static final String FIND_BY_USER_ID_FROM_PARTICIPANT_QUERY = "SELECT * FROM participants WHERE user_id = ?";
 
     public static final String FIND_BY_EVENT_ID_FROM_TOPIC_QUERY = "SELECT * FROM topics WHERE event_id = ?";
     public static final String DELETE_EVENT_BY_ID_QUERY = "DELETE FROM events WHERE id = ?";
@@ -22,7 +26,5 @@ public class DBQueries {
     public static final String SAVE_TOPIC_QUERY = "INSERT INTO topics (title, event_id) VALUES (?, ?)";
     public static final String FIND_TOPIC_BY_ID_QUERY = "SELECT * FROM topics WHERE id = ?";
     public static final String UPDATE_TOPIC_QUERY = "UPDATE topics SET speaker_id = ?, event_id = ? WHERE id = ?";
-
-
 }
 
