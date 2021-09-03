@@ -23,8 +23,6 @@
 </head>
 <body class="p-0 m-0">
 <%--      th:style="'background: url(../img/desk.jpg) no-repeat center center fixed; background-size: 100% 100%;'">--%>
-
-<%--<div th:fragment="menu">--%>
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
     <div class="container-fluid">
         <div>

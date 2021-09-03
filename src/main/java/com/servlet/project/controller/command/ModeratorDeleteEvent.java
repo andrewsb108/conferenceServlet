@@ -1,6 +1,5 @@
 package com.servlet.project.controller.command;
 
-import com.servlet.project.exceptions.EventDeleteException;
 import com.servlet.project.model.service.EventService;
 
 import javax.servlet.http.HttpServletRequest;

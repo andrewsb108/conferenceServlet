@@ -31,7 +31,6 @@ public class ModeratorAssignSpeaker implements Command {
                 .map(Long::valueOf).orElse(null);
 
         List<User> users = userService.getAllUsers();
-        // todo: wrap with try catch
         Topic topic = topicService.getTopic(topicId);
 
         request.setAttribute("users", users);

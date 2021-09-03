@@ -1,6 +1,5 @@
 package com.servlet.project.model.dao.mapper;
 
-import com.servlet.project.model.entity.Event;
 import com.servlet.project.model.entity.Role;
 import com.servlet.project.model.entity.User;
 import org.apache.logging.log4j.LogManager;

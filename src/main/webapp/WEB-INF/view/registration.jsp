@@ -121,9 +121,6 @@
                 <br>
                 <button class="btn btn-outline-success" type="submit">
                 <fmt:message key="login.sign.up">Sign up</fmt:message></button>
-<%--                <div class="my-sm-3 m-3 text-right">--%>
-<%--                    <a href="${contextPath}/login"> <fmt:message key="reg.sign.in">I already have an--%>
-<%--                                                       Account </fmt:message> </a></div>--%>
             </div>
         </form>
     </div>

@@ -16,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
@@ -49,57 +50,67 @@ class UserServiceTest {
 
     @Test
     void create_test() {
-        var user = Optional.ofNullable(User.builder()
+        //given
+        var user = User.builder()
                 .firstName(firstName)
                 .lastName(lastName)
                 .email(email)
                 .password(password)
                 .role(role)
-                .build());
-        given(testInstance.create(any(), any(), any(), any(), any())).willReturn(user);
-//        given(testInstance.create(firstName, lastName, email, password, role.name())).willReturn(user);
+                .build();
 
+        String encodedPassword = "sadfghjklkuyjth456";
+        given(securityService.encrypt(password)).willReturn(encodedPassword);
+        given(userDao.save(user)).willReturn(Optional.of(user));
 
+        //when
+        Optional<User> actualUser = testInstance.create(firstName, lastName, email, password, role.name());
+
+        //than
+        assertThat(actualUser.get()).isEqualTo(user);
         verify(securityService).encrypt(password);
-        verify(userDao).save(user.get());
+        verify(userDao).save(user);
     }
 
-//    @Test
-//    void whenPassChanged_update_test() {
-//        User user = User.builder()
-//                .id(3)
-//                .firstName("firstName")
-//                .lastName("lastName")
-//                .email("user@mail.com")
-//                .role(Role.USER)
-//                .build();
-//
-//        when(userDaoMock.update(any(User.class))).thenReturn(Optional.of(user));
-//
-//        userService.update("3", "firstName",
-//                "lastName", "123", Role.USER.name(), "");
-//
-//        verify(securityServiceMock).encrypt("123");
-//        verify(userDaoMock).update(any(User.class));
-//    }
-//
-//    @Test
-//    void findAll_test() {
-//        userService.findAll();
-//        verify(userDaoMock).findAll();
-//    }
-//
-//    @Test
-//    void findById_test() {
-//        long id = 12;
-//        userService.findById(id);
-//        verify(userDaoMock).findById(id);
-//    }
-//
-//    @Test
-//    void delete_test() {
-//        long id = 12;
-//        userService.delete(id);
-//        verify(userDaoMock).deleteById(id);
-//    }
+    @Test
+    void when_update_test() {
+        //given
+        User user = User.builder()
+                .id(1)
+                .firstName("firstName")
+                .lastName("lastName")
+                .email("user@mail.com")
+                .role(Role.USER)
+                .build();
+
+        when(userDao.update(any(User.class))).thenReturn(Optional.of(user));
+
+        //when
+        testInstance.update("3", "firstName",
+                "lastName", "123", Role.USER.name(), "");
+
+        //than
+        verify(securityService).encrypt("123");
+        verify(userDao).update(any(User.class));
+    }
+
+    @Test
+    void findAll_test() {
+        testInstance.findAll();
+        verify(userDao).findAll();
+    }
+
+    @Test
+    void findById_test() {
+        long id = 1;
+        testInstance.findById(id);
+        verify(userDao).findById(id);
+    }
+
+    @Test
+    void delete_test() {
+        long id = 1;
+        testInstance.delete(id);
+        verify(userDao).deleteById(id);
+    }
 }

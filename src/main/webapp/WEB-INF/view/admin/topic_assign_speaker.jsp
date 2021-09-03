@@ -30,7 +30,7 @@
             <a href="?lang=uk" class="btn btn-outline-success">Українська</a>
         </div>
         <form action="${contextPath}/logout" name="logout" method="POST">
-            <a class="btn btn-outline-success"> href="${contextPath}/index" <fmt:message key="back.button">Back</fmt:message></a>
+            <a class="btn btn-outline-success" href="${contextPath}/index"> <fmt:message key="back.button">Back</fmt:message></a>
             <button type="submit" class="btn btn-outline-success" name="logout" value="logout">
                     <fmt:message key="login.out">Log out</fmt:message>
             </button>
@@ -46,7 +46,6 @@
             <tr>
                 <td><c:out value="${topic.title}"/></td>
                 <td>
-<%--                        <form id="assignSpeaker" action="${contextPath}/event/edit/?eventId=${requestScope.eventId}&topicId=${requestScope.topicId}" method="post">--%>
                         <form id="assignSpeaker" action="${contextPath}/event/assign/speaker?eventId=${requestScope.eventId}&topicId=${requestScope.topicId}" method="post">
                         <select name="speakerId" class="form-select">
                             <option value="" selected disabled><fmt:message key="topic.select.user">Select user</fmt:message></option>

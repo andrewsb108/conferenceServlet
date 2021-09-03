@@ -30,15 +30,6 @@ public class SpeakerEvents implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-/*
-        Long userId = Optional.ofNullable(request.getParameter("userId"))
-                .map(Long::valueOf)
-                .orElse(null);
-
-        if (Objects.isNull(userId)) {
-            return resolve("index");
-        }
-*/
 
         HttpSession session = request.getSession();
         User user = securityService.getLoggedUser(session);

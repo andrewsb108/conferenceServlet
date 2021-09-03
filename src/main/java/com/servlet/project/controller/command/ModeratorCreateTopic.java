@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 import java.util.Optional;
 
-import static com.servlet.project.util.ViewResolver.resolveAdmin;
-
 public class ModeratorCreateTopic implements Command {
 
     private final EventService eventService;
